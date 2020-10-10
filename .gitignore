@@ -1,0 +1,5 @@
+bin
+obj
+*.suo
+TestResults/
+/.vs/Photoshop/v15/Server/sqlite3
