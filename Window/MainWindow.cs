@@ -20,24 +20,24 @@ namespace MyPhotoshop
 		
 		public MainWindow ()
 		{
-			original=new PictureBox();
+			original = new PictureBox();
 			Controls.Add (original);
 			
-            processed=new PictureBox();
+            processed = new PictureBox();
 			Controls.Add(processed);
 			
-            filtersSelect=new ComboBox();
+            filtersSelect = new ComboBox();
 			filtersSelect.DropDownStyle = ComboBoxStyle.DropDownList;
-			filtersSelect.SelectedIndexChanged+=FilterChanged;
+			filtersSelect.SelectedIndexChanged+= FilterChanged;
 			Controls.Add (filtersSelect);
 
-            apply=new Button();
-			apply.Text="Применить";
-			apply.Enabled=false;
-			apply.Click+=Process;
+            apply = new Button();
+			apply.Text = "Применить";
+			apply.Enabled = false;
+			apply.Click+= Process;
 			Controls.Add (apply);
 
-            Text="Photoshop pre-alpha release";
+            Text = "Photoshop pre-alpha release";
 			FormBorderStyle = FormBorderStyle.FixedDialog;
 
             
@@ -79,49 +79,49 @@ namespace MyPhotoshop
 		public void AddFilter(IFilter filter)
 		{
 			filtersSelect.Items.Add(filter);
-			if (filtersSelect.SelectedIndex==-1)
+			if (filtersSelect.SelectedIndex == -1)
 			{
-				filtersSelect.SelectedIndex=0;
-				apply.Enabled=true;
+				filtersSelect.SelectedIndex = 0;
+				apply.Enabled = true;
 			}
 		}
 		
 		void FilterChanged(object sender, EventArgs e)
 		{
-			var filter=(IFilter)filtersSelect.SelectedItem;
-			if (filter==null) return;
-			if (parametersPanel!=null) Controls.Remove (parametersPanel);
-			parametersControls=new List<NumericUpDown>();
-			parametersPanel=new Panel();
-			parametersPanel.Left=filtersSelect.Left;
-			parametersPanel.Top=filtersSelect.Bottom+10;
-			parametersPanel.Width=filtersSelect.Width;
-			parametersPanel.Height=ClientSize.Height-parametersPanel.Top;
+			var filter = (IFilter)filtersSelect.SelectedItem;
+			if (filter == null) return;
+			if (parametersPanel!= null) Controls.Remove (parametersPanel);
+			parametersControls = new List<NumericUpDown>();
+			parametersPanel = new Panel();
+			parametersPanel.Left = filtersSelect.Left;
+			parametersPanel.Top = filtersSelect.Bottom+10;
+			parametersPanel.Width = filtersSelect.Width;
+			parametersPanel.Height = ClientSize.Height-parametersPanel.Top;
 			
-			int y=0;
+			int y = 0;
 			
 			foreach(var param in filter.GetParameters ())
 			{
-				var label=new Label();
-				label.Left=0;
-				label.Top=y;
-				label.Width=parametersPanel.Width-50;
-				label.Height=20;
-				label.Text=param.Name;
+				var label = new Label();
+				label.Left = 0;
+				label.Top = y;
+				label.Width = parametersPanel.Width-50;
+				label.Height = 20;
+				label.Text = param.Name;
 				parametersPanel.Controls.Add (label);
 				
-				var box=new NumericUpDown();
-				box.Left=label.Right;
-				box.Top=y;
-				box.Width=50;
-				box.Height=20;
-				box.Value=(decimal)param.DefaultValue;
-				box.Increment=(decimal)param.Increment/3;
-				box.Maximum=(decimal)param.MaxValue;
-				box.Minimum=(decimal)param.MinValue;
+				var box = new NumericUpDown();
+				box.Left = label.Right;
+				box.Top = y;
+				box.Width = 50;
+				box.Height = 20;
+				box.Value = (decimal)param.DefaultValue;
+				box.Increment = (decimal)param.Increment/3;
+				box.Maximum = (decimal)param.MaxValue;
+				box.Minimum = (decimal)param.MinValue;
                 box.DecimalPlaces = 2;
 				parametersPanel.Controls.Add (box);
-				y+=label.Height+5;
+				y+= label.Height+5;
 				parametersControls.Add(box);
 			}
 			Controls.Add (parametersPanel);
@@ -130,11 +130,11 @@ namespace MyPhotoshop
 		
 		void Process(object sender, EventArgs empty)
 		{
-			var data=parametersControls.Select(z=>(double)z.Value).ToArray();
-			var filter=(IFilter)filtersSelect.SelectedItem;
-			Photo result=null;
-     		result=filter.Process(originalPhoto,data);
-	        var resultBmp=Convertors.Photo2Bitmap(result);
+			var data = parametersControls.Select(z =>(double)z.Value).ToArray();
+			var filter = (IFilter)filtersSelect.SelectedItem;
+			Photo result = null;
+     		result = filter.Process(originalPhoto,data);
+	        var resultBmp = Convertors.Photo2Bitmap(result);
 			if (resultBmp.Width>originalBmp.Width || resultBmp.Height>originalBmp.Height)
 			{
                 float k = Math.Min((float)originalBmp.Width / resultBmp.Width, (float)originalBmp.Height / resultBmp.Height);
@@ -146,7 +146,7 @@ namespace MyPhotoshop
 				resultBmp = newBmp;
 			}
 				
-			processed.Image=resultBmp;
+			processed.Image = resultBmp;
 		}
 
         

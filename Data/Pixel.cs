@@ -10,31 +10,31 @@ namespace MyPhotoshop
         double r;
         public double R
         {
-            get => 
+            get  => 
                 r;
-            set => 
+            set  => 
                 r = Check(value);
         }
 
         double g;
         public double G
         {
-            get =>
+            get  =>
                 g;
-            set =>
+            set  =>
                 g = Check(value);
         }
 
         double b;
         public double B
         {
-            get =>
+            get  =>
                 b;
-            set =>
+            set  =>
                 b = Check(value);
         }
 
-        public static double Trim(double range) =>
+        public static double Trim(double range)  =>
             range > 1 ? 1 : (range < 0 ? 0 : range);
 
         public double Check(double value)
