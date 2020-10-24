@@ -5,8 +5,19 @@ using System.Text;
 
 namespace MyPhotoshop
 {
-    public class Pixel
+    public struct Pixel
     {
+        public Pixel(double r, double g, double b)
+        {
+            //We fulfill the formal requirement of the compile
+            //to initialize all properties of the object
+            this.r = this.g = this.b = 0;
+
+            R = r;
+            G = g;
+            B = b;
+        }
+
         double r;
         public double R
         {
