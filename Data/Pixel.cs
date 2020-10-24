@@ -54,5 +54,18 @@ namespace MyPhotoshop
                 throw new ArgumentException();
             return value;
         }
+
+        public static Pixel operator* (Pixel p, double num)
+        {
+            return new Pixel(
+                        Pixel.Trim(p.R * num),
+                        Pixel.Trim(p.G * num),
+                        Pixel.Trim(p.B * num));
+        }
+
+        public static Pixel operator* (double num, Pixel p)
+        {
+            return p * num;
+        }
     }
 }
